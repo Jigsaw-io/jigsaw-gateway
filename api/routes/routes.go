@@ -19,11 +19,16 @@ type Routes []Route
 @author Azeem Ashraf
 */
 var routes = Routes{
-
 	Route{
 		"POC",
 		"POST",
-		"/api/transactions/userICO",
-		businessFacades.UserICOHandler, //Calls the UserICOHandler
+		"/api/transactions/userICOJIGXU",
+		businessFacades.UserICOJIGXUHandler, //Calls the UserICOJIGXUHandler
+	},
+	Route{
+		"POC",
+		"POST",
+		"/api/transactions/userICOXLM",
+		businessFacades.UserICOXLMHandler, //Calls the UserICOXLMHandler
 	},
 }

@@ -24,12 +24,20 @@ func (cd *ConcreteSubmitXDR) SubmitXDR(testnet bool) model.SubmitXDRResponse {
 	var response model.SubmitXDRResponse
 
 	if testnet {
+		// fmt.Println(cd.XDR)
 		resp, err := horizon.DefaultTestNetClient.SubmitTransaction(cd.XDR)
 		if err != nil {
-			// panic(err)
-			fmt.Println(err.Error())
+
+			error1 := err.(*horizon.Error)
+			TC, _ := error1.ResultCodes()
+			for _, element := range TC.OperationCodes {
+				response.Error.Message = response.Error.Message + element + "? "
+			}
+
+			fmt.Println(response.Error.Message)
+
 			response.Error.Code = http.StatusBadRequest
-			response.Error.Message = err.Error()
+			// response.Error.Message = TC.OperationCodes
 			return response
 		}
 
@@ -41,12 +49,19 @@ func (cd *ConcreteSubmitXDR) SubmitXDR(testnet bool) model.SubmitXDRResponse {
 		response.Error.Message = "Transaction performed in the blockchain."
 		response.TXNID = resp.Hash
 	} else {
-		resp, err := horizon.DefaultTestNetClient.SubmitTransaction(cd.XDR)
+		resp, err := horizon.DefaultPublicNetClient.SubmitTransaction(cd.XDR)
 		if err != nil {
-			// panic(err)
-			fmt.Println(err.Error())
+
+			error1 := err.(*horizon.Error)
+			TC, _ := error1.ResultCodes()
+			for _, element := range TC.OperationCodes {
+				response.Error.Message = response.Error.Message + element + "? "
+			}
+
+			fmt.Println(response.Error.Message)
+
 			response.Error.Code = http.StatusBadRequest
-			response.Error.Message = err.Error()
+			// response.Error.Message = TC.OperationCodes
 			return response
 		}
 

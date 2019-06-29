@@ -14,11 +14,11 @@ import (
 	"github.com/zeemzo/jigsaw-gateway/proofs/builder"
 )
 
-/*SubmitGenesis @desc Handles an incoming request and calls the genesisBuilder
+/*UserICOJIGXUHandler @desc Handles an incoming request and calls the BuildUserICOJIGXU
 @author - Azeem Ashraf
 @params - ResponseWriter,Request
 */
-func UserICOHandler(w http.ResponseWriter, r *http.Request) {
+func UserICOJIGXUHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	var userICOAPI model.UserICOAPI
 
@@ -53,8 +53,52 @@ func UserICOHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(userICOAPI)
 
-	display := &builder.AbstractXDRSubmiter{UserICOAPI: userICOAPI}
-	display.SubmitGenesis(w, r)
+	display := &builder.AbstractXDRBuilder{UserICOAPI: userICOAPI}
+	display.BuildUserICOJIGXU(w, r)
+	return
+}
+
+/*UserICOJIGXUHandler @desc Handles an incoming request and calls the BuildUserICOJIGXU
+@author - Azeem Ashraf
+@params - ResponseWriter,Request
+*/
+func UserICOXLMHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var userICOAPI model.UserICOAPI
+
+	if r.Header == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Header present!",
+		}
+		json.NewEncoder(w).Encode(result)
+		return
+	}
+
+	if r.Header.Get("Content-Type") == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Content-Type present!",
+		}
+		json.NewEncoder(w).Encode(result)
+
+		return
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&userICOAPI)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "Error while Decoding the body",
+		}
+		json.NewEncoder(w).Encode(result)
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(userICOAPI)
+
+	display := &builder.AbstractXDRBuilder{UserICOAPI: userICOAPI}
+	display.BuildUserICOXLM(w, r)
 	return
 }
 
