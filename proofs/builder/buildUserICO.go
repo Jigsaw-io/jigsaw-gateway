@@ -15,7 +15,7 @@ import (
 	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
 )
 
-type AbstractXDRBuilder struct {
+type AbstractICOBuilder struct {
 	UserICOAPI model.UserICOAPI
 }
 
@@ -24,7 +24,7 @@ type AbstractXDRBuilder struct {
 @desc - use the parameter to get user public key to build payment transaction for XLM and submit it
 @params - ResponseWriter,Request
 */
-func (AP *AbstractXDRBuilder) BuildUserICOXLM(w http.ResponseWriter, r *http.Request) {
+func (AP *AbstractICOBuilder) BuildUserICOXLM(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -107,7 +107,7 @@ func (AP *AbstractXDRBuilder) BuildUserICOXLM(w http.ResponseWriter, r *http.Req
 @desc - use the parameter to get user public key to build payment transaction for JIGXU and submit it
 @params - ResponseWriter,Request
 */
-func (AP *AbstractXDRBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.Request) {
+func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 

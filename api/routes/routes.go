@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+
 	"github.com/zeemzo/jigsaw-gateway/api/businessFacades"
 )
 
@@ -20,10 +21,16 @@ type Routes []Route
 */
 var routes = Routes{
 	Route{
-		"POC",
+		"userICOJIGXU",
 		"POST",
 		"/api/transactions/userICOJIGXU",
 		businessFacades.UserICOJIGXUHandler, //Calls the UserICOJIGXUHandler
+	},
+	Route{
+		"create knowledge",
+		"POST",
+		"/api/transactions/genesis",
+		businessFacades.CreateKnowledge, //Calls the UserICOJIGXUHandler
 	},
 	Route{
 		"POC",
