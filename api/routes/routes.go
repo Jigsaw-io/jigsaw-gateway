@@ -33,6 +33,12 @@ var routes = Routes{
 		businessFacades.CreateKnowledge, //Calls the UserICOJIGXUHandler
 	},
 	Route{
+		"add knowledge",
+		"POST",
+		"/api/transactions/contribute",
+		businessFacades., //Calls the UserICOJIGXUHandler
+	},
+	Route{
 		"POC",
 		"POST",
 		"/api/transactions/userICOXLM",

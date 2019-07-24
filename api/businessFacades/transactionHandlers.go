@@ -110,7 +110,7 @@ func UserICOXLMHandler(w http.ResponseWriter, r *http.Request) {
 */
 func CreateKnowledge(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	var KnowledgeAPI model.KnowledgeAPI
+	var knowledgeAPI model.KnowledgeAPI
 
 	if r.Header == nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -131,7 +131,7 @@ func CreateKnowledge(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := json.NewDecoder(r.Body).Decode(&KnowledgeAPI)
+	err := json.NewDecoder(r.Body).Decode(&knowledgeAPI)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		result := apiModel.SubmitXDRSuccess{
@@ -141,13 +141,56 @@ func CreateKnowledge(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(KnowledgeAPI)
+	fmt.Println(knowledgeAPI)
 
-	display := &builder.AbstractKnowledgeBuilder{KnowledgeAPI}
+	display := &builder.AbstractKnowledgeBuilder{knowledgeAPI}
 	display.BuildCreateKnowledge(w, r)
 	return
 }
 
+/*AddKnowledge @desc Handles an incoming request and calls the CreateKnowledge
+@author - Azeem Ashraf
+@params - ResponseWriter,Request
+*/
+func AddKnowledge(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var contributionAPI model.ContributionAPI
+
+	if r.Header == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Header present!",
+		}
+		json.NewEncoder(w).Encode(result)
+		return
+	}
+
+	if r.Header.Get("Content-Type") == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Content-Type present!",
+		}
+		json.NewEncoder(w).Encode(result)
+
+		return
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&contributionAPI)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "Error while Decoding the body",
+		}
+		json.NewEncoder(w).Encode(result)
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(contributionAPI)
+
+	display := &builder.AbstractContributionBuilder{contributionAPI}
+	display.BuildAddKnowledge(w, r)
+	return
+}
 type Transuc struct {
 	TXN string `json:"txn"`
 }
@@ -220,6 +263,8 @@ func ConvertXDRToTXN(w http.ResponseWriter, r *http.Request) {
 	return
 
 }
+
+
 
 type TDP struct {
 	TdpId string `json:"tdpId"`

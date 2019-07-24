@@ -27,7 +27,7 @@ type AbstractContributionBuilder struct {
 @desc - use the parameter to get user public key to build payment transaction for XLM and submit it
 @params - ResponseWriter,Request
 */
-func (AP *AbstractContributionBuilder) BuildCreateKnowledge(w http.ResponseWriter, r *http.Request) {
+func (AP *AbstractContributionBuilder) BuildAddKnowledge(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 

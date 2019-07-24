@@ -50,6 +50,7 @@ func (AP *AbstractKnowledgeBuilder) BuildCreateKnowledge(w http.ResponseWriter, 
 	//SUBMIT THE GATEWAY'S SIGNED XDR
 	display1 := stellarExecuter.ConcreteSubmitXDR{XDR: AP.XDR}
 	response1 := display1.SubmitXDR(true)
+	fmt.Println(AP)
 
 	if response1.Error.Code == 400 {
 		w.WriteHeader(http.StatusBadRequest)
