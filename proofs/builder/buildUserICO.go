@@ -114,8 +114,8 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 	object := dao.Connection{}
 
 	///HARDCODED CREDENTIALS ISSUER KEYPAIR FOR JIGXU
-	publicKey := constants.JIGXUISSUERPUB
-	secretKey := constants.JIGXUISSUERSEC
+	publicKey := constants.JIGXUDISTRIBUTORPUB
+	secretKey := constants.JIGXKDISTRIBUTORSEC
 	// var result model.SubmitXDRResponse
 
 	//BUILD THE PAYMENT XDR
