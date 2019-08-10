@@ -18,11 +18,12 @@ import (
 	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
 )
 
+//AbstractContributionBuilder ...
 type AbstractContributionBuilder struct {
 	model.ContributionAPI
 }
 
-/*BuildUserICOXLM - WORKING MODEL
+/*BuildAddKnowledge - WORKING MODEL
 @author - Azeem Ashraf
 @desc - use the parameter to get user public key to build payment transaction for XLM and submit it
 @params - ResponseWriter,Request
@@ -48,7 +49,6 @@ func (AP *AbstractContributionBuilder) BuildAddKnowledge(w http.ResponseWriter, 
 	AP.KnowledgeID = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[1].Body.ManageDataOp.DataValue), "&")
 	AP.KnowledgeHash = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[2].Body.ManageDataOp.DataValue), "&")
 
-
 	//SUBMIT THE GATEWAY'S SIGNED XDR
 	display1 := stellarExecuter.ConcreteSubmitXDR{XDR: AP.XDR}
 	response1 := display1.SubmitXDR(true)
@@ -61,7 +61,6 @@ func (AP *AbstractContributionBuilder) BuildAddKnowledge(w http.ResponseWriter, 
 		json.NewEncoder(w).Encode(result)
 		return
 	} else {
-
 		AP.TxnHash = response1.TXNID
 		err2 := object.InsertContributions(AP.ContributionAPI)
 		if err2 != nil {
@@ -80,5 +79,4 @@ func (AP *AbstractContributionBuilder) BuildAddKnowledge(w http.ResponseWriter, 
 			return
 		}
 	}
-
 }

@@ -75,7 +75,7 @@ func (AP *AbstractICOBuilder) BuildUserICOXLM(w http.ResponseWriter, r *http.Req
 	if response1.Error.Code == 400 {
 		w.WriteHeader(http.StatusBadRequest)
 		result := apiModel.SubmitXDRSuccess{
-			Status: "Failed: "+response1.Error.Message,
+			Status: "Failed: " + response1.Error.Message,
 		}
 		json.NewEncoder(w).Encode(result)
 		return
@@ -99,7 +99,7 @@ func (AP *AbstractICOBuilder) BuildUserICOXLM(w http.ResponseWriter, r *http.Req
 			return
 		}
 	}
-	
+
 }
 
 /*BuildUserICOJIGXU - WORKING MODEL
@@ -114,8 +114,8 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 	object := dao.Connection{}
 
 	///HARDCODED CREDENTIALS ISSUER KEYPAIR FOR JIGXU
-	publicKey := constants.ISSUERPUB
-	secretKey := constants.ISSUERSEC
+	publicKey := constants.JIGXUISSUERPUB
+	secretKey := constants.JIGXUISSUERSEC
 	// var result model.SubmitXDRResponse
 
 	//BUILD THE PAYMENT XDR
@@ -125,7 +125,7 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 		build.AutoSequence{SequenceProvider: horizon.DefaultTestNetClient},
 		build.Payment(
 			build.Destination{AddressOrSeed: AP.UserICOAPI.PublicKey},
-			build.CreditAmount{"JIGXU", publicKey, "50"},
+			build.CreditAmount{"JIGXU", publicKey, "30"},
 		),
 	)
 
@@ -158,7 +158,7 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 	if response1.Error.Code == 400 {
 		w.WriteHeader(http.StatusBadRequest)
 		result := apiModel.SubmitXDRSuccess{
-			Status: "Failed: "+response1.Error.Message,
+			Status: "Failed: " + response1.Error.Message,
 		}
 		json.NewEncoder(w).Encode(result)
 		return
@@ -182,5 +182,5 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 			return
 		}
 	}
-	
+
 }
