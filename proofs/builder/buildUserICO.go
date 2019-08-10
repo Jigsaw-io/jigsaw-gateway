@@ -115,7 +115,7 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 
 	///HARDCODED CREDENTIALS ISSUER KEYPAIR FOR JIGXU
 	publicKey := constants.JIGXUDISTRIBUTORPUB
-	secretKey := constants.JIGXKDISTRIBUTORSEC
+	secretKey := constants.JIGXUDISTRIBUTORSEC
 	// var result model.SubmitXDRResponse
 
 	//BUILD THE PAYMENT XDR
@@ -125,7 +125,7 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 		build.AutoSequence{SequenceProvider: horizon.DefaultTestNetClient},
 		build.Payment(
 			build.Destination{AddressOrSeed: AP.UserICOAPI.PublicKey},
-			build.CreditAmount{"JIGXU", publicKey, "30"},
+			build.CreditAmount{"JIGXU", constants.JIGXUISSUERPUB, "30"},
 		),
 	)
 
