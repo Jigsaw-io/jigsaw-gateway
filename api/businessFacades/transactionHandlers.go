@@ -327,7 +327,7 @@ func LastKnowledge(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
-	p := object.GetLastKnowledgeByPublicKey(vars["publicKey"])
+	p := object.GetLastKnowledgeByPublicKey(vars["PublicKey"])
 	p.Then(func(data interface{}) interface{} {
 		result := data.(model.KnowledgeAPI)
 		w.WriteHeader(http.StatusOK)
@@ -354,7 +354,7 @@ func LastContribution(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
-	p := object.GetLastContributionByKnowledge(vars["knowledgeID"])
+	p := object.GetLastContributionByKnowledge(vars["KnowledgeID"])
 	p.Then(func(data interface{}) interface{} {
 		result := data.(model.ContributionAPI)
 		w.WriteHeader(http.StatusOK)
@@ -382,7 +382,7 @@ func LastVote(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
-	p := object.GetLastVoteByContribution(vars["contibutionID"])
+	p := object.GetLastVoteByContribution(vars["ContibutionID"])
 	p.Then(func(data interface{}) interface{} {
 		result := data.(model.KnowledgeAPI)
 

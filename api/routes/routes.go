@@ -47,19 +47,19 @@ var routes = Routes{
 	Route{
 		"lastVote",
 		"GET",
-		"/api/transactions/lastVote/:contributionID",
+		"/api/transactions/lastVote/{ContributionID}",
 		businessFacades.LastVote, //Calls the UserICOJIGXUHandler
 	},
 	Route{
 		"lastContribution",
 		"GET",
-		"/api/transactions/lastContribution/:knowledgeID",
+		"/api/transactions/lastContribution/{KnowledgeID}",
 		businessFacades.LastContribution, //Calls the UserICOJIGXUHandler
 	},
 	Route{
 		"LastKnowledge",
 		"GET",
-		"/api/transactions/lastKnowledge/:publicKey",
+		"/api/transactions/lastKnowledge/{PublicKey}",
 		businessFacades.LastKnowledge, //Calls the UserICOJIGXUHandler
 	},
 	Route{
