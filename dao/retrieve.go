@@ -313,7 +313,7 @@ func (cd *Connection) GetLastKnowledgeByPublicKey(publickey string) *promise.Pro
 @author - Azeem Ashraf
 */
 func (cd *Connection) GetLastContributionByKnowledge(Knowledge string) *promise.Promise {
-	result := []model.KnowledgeAPI{}
+	result := []model.ContributionAPI{}
 	// p := promise.NewPromise()
 
 	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
@@ -349,7 +349,7 @@ func (cd *Connection) GetLastContributionByKnowledge(Knowledge string) *promise.
 @author - Azeem Ashraf
 */
 func (cd *Connection) GetLastVoteByContribution(Contribution string) *promise.Promise {
-	result := []model.KnowledgeAPI{}
+	result := []model.VoteAPI{}
 	// p := promise.NewPromise()
 
 	var p = promise.New(func(resolve func(interface{}), reject func(error)) {

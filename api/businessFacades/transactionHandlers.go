@@ -388,7 +388,7 @@ func LastVote(w http.ResponseWriter, r *http.Request) {
 	object := dao.Connection{}
 	p := object.GetLastVoteByContribution(vars["ContibutionID"])
 	p.Then(func(data interface{}) interface{} {
-		result := data.(model.KnowledgeAPI)
+		result := data.(model.VoteAPI)
 
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(model.LastTxnAPI{LastTxn:result.TxnHash})
