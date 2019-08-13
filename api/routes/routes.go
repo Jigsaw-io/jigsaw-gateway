@@ -39,6 +39,30 @@ var routes = Routes{
 		businessFacades.AddKnowledge, //Calls the UserICOJIGXUHandler
 	},
 	Route{
+		"vote",
+		"POST",
+		"/api/transactions/vote",
+		businessFacades.AddVote, //Calls the UserICOJIGXUHandler
+	},
+	Route{
+		"lastVote",
+		"GET",
+		"/api/transactions/lastVote/:contributionID",
+		businessFacades.LastVote, //Calls the UserICOJIGXUHandler
+	},
+	Route{
+		"lastContribution",
+		"GET",
+		"/api/transactions/lastContribution/:knowledgeID",
+		businessFacades.LastContribution, //Calls the UserICOJIGXUHandler
+	},
+	Route{
+		"LastKnowledge",
+		"GET",
+		"/api/transactions/lastKnowledge/:publicKey",
+		businessFacades.LastKnowledge, //Calls the UserICOJIGXUHandler
+	},
+	Route{
 		"POC",
 		"POST",
 		"/api/transactions/userICOXLM",

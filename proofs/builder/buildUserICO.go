@@ -1,6 +1,7 @@
 package builder
 
 import (
+
 	"encoding/json"
 	"net/http"
 
@@ -17,6 +18,7 @@ import (
 
 type AbstractICOBuilder struct {
 	UserICOAPI model.UserICOAPI
+	XDR string
 }
 
 /*BuildUserICOXLM - WORKING MODEL
@@ -184,3 +186,4 @@ func (AP *AbstractICOBuilder) BuildUserICOJIGXU(w http.ResponseWriter, r *http.R
 	}
 
 }
+

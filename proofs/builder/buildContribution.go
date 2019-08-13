@@ -46,8 +46,9 @@ func (AP *AbstractContributionBuilder) BuildAddKnowledge(w http.ResponseWriter, 
 	AP.PublicKey = txe.SourceAccount.Address()
 	// TDP.PreviousTxnHash=
 	AP.Type = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[0].Body.ManageDataOp.DataValue), "&")
-	AP.KnowledgeID = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[1].Body.ManageDataOp.DataValue), "&")
-	AP.KnowledgeHash = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[2].Body.ManageDataOp.DataValue), "&")
+	AP.PreviousTxn = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[1].Body.ManageDataOp.DataValue), "&")
+	AP.KnowledgeID = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[2].Body.ManageDataOp.DataValue), "&")
+	AP.KnowledgeHash = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[3].Body.ManageDataOp.DataValue), "&")
 
 	//SUBMIT THE GATEWAY'S SIGNED XDR
 	display1 := stellarExecuter.ConcreteSubmitXDR{XDR: AP.XDR}

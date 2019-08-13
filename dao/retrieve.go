@@ -273,11 +273,11 @@ func (cd *Connection) GetLastCOCbyIdentifier(identifier string) *promise.Promise
 
 }
 
-/*GetLastTransactionbyIdentifier Retrieve Last Transaction Object from TransactionCollection in DB by Identifier
+/*GetLastKnowledgeByPublicKey Retrieve Last Transaction Object from TransactionCollection in DB by Identifier
 @author - Azeem Ashraf
 */
-func (cd *Connection) GetLastTransactionbyIdentifier(identifier string) *promise.Promise {
-	result := []model.TransactionCollectionBody{}
+func (cd *Connection) GetLastKnowledgeByPublicKey(publickey string) *promise.Promise {
+	result := []model.KnowledgeAPI{}
 	// p := promise.NewPromise()
 
 	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
@@ -291,8 +291,8 @@ func (cd *Connection) GetLastTransactionbyIdentifier(identifier string) *promise
 		}
 		defer session.Close()
 
-		c := session.DB("tracified-gateway").C("Transactions")
-		err1 := c.Find(bson.M{"identifier": identifier}).All(&result)
+		c := session.DB("jigsaw-gateway").C("Knowledge")
+		err1 := c.Find(bson.M{"publickey": publickey}).All(&result)
 		if err1 != nil || len(result) == 0 {
 			// fmt.Println(err1)
 			reject(err1)
@@ -308,11 +308,12 @@ func (cd *Connection) GetLastTransactionbyIdentifier(identifier string) *promise
 
 }
 
-/*GetFirstTransactionbyIdentifier Retrieve First Transaction Object from TransactionCollection in DB by Identifier
+
+/*GetLastContributionByKnowledge Retrieve Last Transaction Object from TransactionCollection in DB by Identifier
 @author - Azeem Ashraf
 */
-func (cd *Connection) GetFirstTransactionbyIdentifier(identifier string) *promise.Promise {
-	result := model.TransactionCollectionBody{}
+func (cd *Connection) GetLastContributionByKnowledge(Knowledge string) *promise.Promise {
+	result := []model.KnowledgeAPI{}
 	// p := promise.NewPromise()
 
 	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
@@ -326,245 +327,8 @@ func (cd *Connection) GetFirstTransactionbyIdentifier(identifier string) *promis
 		}
 		defer session.Close()
 
-		c := session.DB("tracified-gateway").C("Transactions")
-		err1 := c.Find(bson.M{"identifier": identifier}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		}
-		resolve(result)
-
-	})
-
-	return p
-
-}
-
-/*GetTransactionsbyIdentifier Retrieve All Transaction Objects from TransactionCollection in DB by Identifier
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetTransactionsbyIdentifier(identifier string) *promise.Promise {
-	result := []model.TransactionCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Transactions")
-		err1 := c.Find(bson.M{"identifier": identifier}).All(&result)
-		if err1 != nil || len(result) == 0 {
-			// fmt.Println(err1)
-			reject(err1)
-
-		} else {
-			resolve(result)
-
-		}
-
-	})
-
-	return p
-
-}
-
-/*GetTransactionForTdpId Retrieve a Transaction Object from TransactionCollection in DB by TDPID
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetTransactionForTdpId(TdpId string) *promise.Promise {
-	result := model.TransactionCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Transactions")
-		err1 := c.Find(bson.M{"tdpid": TdpId}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		} else {
-			resolve(result)
-
-		}
-
-	})
-
-	return p
-
-}
-
-/*GetTdpIdForTransaction Retrieve a Transaction Object from TransactionCollection in DB by TXNID
-@author - Azeem Ashraf
-*/ 
-func (cd *Connection) GetTdpIdForTransaction(Txn string) *promise.Promise {
-	result := model.TransactionCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Transactions")
-		err1 := c.Find(bson.M{"txnhash": Txn}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		} else {
-			resolve(result)
-
-		}
-
-	})
-
-	return p
-
-}
-
-/*GetOrphanbyIdentifier Retrieve a Transaction Object from OrphanCollection in DB by Identifier
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetOrphanbyIdentifier(identifier string) *promise.Promise {
-	result := model.TransactionCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Orphan")
-		err1 := c.Find(bson.M{"identifier": identifier}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		}
-		resolve(result)
-
-	})
-
-	return p
-
-}
-
-/*GetProfilebyIdentifier Retrieve a Profile Object from ProfileCollection in DB by Identifier
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetProfilebyIdentifier(identifier string) *promise.Promise {
-	result := model.ProfileCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Profiles")
-		err1 := c.Find(bson.M{"identifier": identifier}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		}
-		resolve(result)
-
-	})
-
-	return p
-
-}
-
-/*GetProfilebyProfileID Retrieve a Profile Object from ProfileCollection in DB by ProfileID
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetProfilebyProfileID(ProfileID string) *promise.Promise {
-	result := model.ProfileCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Profiles")
-		err1 := c.Find(bson.M{"profileid": ProfileID}).One(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		}
-		resolve(result)
-
-	})
-
-	return p
-
-}
-
-/*GetLastCertificatebyPublicKey Retrieve a Certificate Object from CertificateCollection in DB by PublicKey
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetLastCertificatebyPublicKey(PublicKey string) *promise.Promise {
-	result := []model.CertificateCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Certificates")
-		err1 := c.Find(bson.M{"publickey": PublicKey}).All(&result)
+		c := session.DB("jigsaw-gateway").C("Contributions")
+		err1 := c.Find(bson.M{"knowledgeid": Knowledge}).All(&result)
 		if err1 != nil || len(result) == 0 {
 			// fmt.Println(err1)
 			reject(err1)
@@ -580,11 +344,12 @@ func (cd *Connection) GetLastCertificatebyPublicKey(PublicKey string) *promise.P
 
 }
 
-/*GetLastCertificatebyCertificateID Retrieve Last Certificate Object from CertificateCollection in DB by CertificateID
+
+/*GetLastVoteByContribution Retrieve Last Transaction Object from TransactionCollection in DB by Identifier
 @author - Azeem Ashraf
 */
-func (cd *Connection) GetLastCertificatebyCertificateID(CertificateID string) *promise.Promise {
-	result := []model.CertificateCollectionBody{}
+func (cd *Connection) GetLastVoteByContribution(Contribution string) *promise.Promise {
+	result := []model.KnowledgeAPI{}
 	// p := promise.NewPromise()
 
 	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
@@ -598,49 +363,14 @@ func (cd *Connection) GetLastCertificatebyCertificateID(CertificateID string) *p
 		}
 		defer session.Close()
 
-		c := session.DB("tracified-gateway").C("Certificates")
-		err1 := c.Find(bson.M{"certificateid": CertificateID}).All(&result)
+		c := session.DB("jigsaw-gateway").C("Votes")
+		err1 := c.Find(bson.M{"contributionid": Contribution}).All(&result)
 		if err1 != nil || len(result) == 0 {
 			// fmt.Println(err1)
 			reject(err1)
 
 		} else {
 			resolve(result[len(result)-1])
-
-		}
-
-	})
-
-	return p
-
-}
-
-/*GetAllCertificatebyPublicKey Retrieve All Certificate Objects from CertificateCollection in DB by PublicKey
-@author - Azeem Ashraf
-*/
-func (cd *Connection) GetAllCertificatebyPublicKey(PublicKey string) *promise.Promise {
-	result := []model.CertificateCollectionBody{}
-	// p := promise.NewPromise()
-
-	var p = promise.New(func(resolve func(interface{}), reject func(error)) {
-		// Do something asynchronously.
-		session, err := cd.connect()
-
-		if err != nil {
-			// fmt.Println(err)
-			reject(err)
-
-		}
-		defer session.Close()
-
-		c := session.DB("tracified-gateway").C("Certificates")
-		err1 := c.Find(bson.M{"publickey": PublicKey}).All(&result)
-		if err1 != nil {
-			// fmt.Println(err1)
-			reject(err1)
-
-		} else {
-			resolve(result)
 
 		}
 

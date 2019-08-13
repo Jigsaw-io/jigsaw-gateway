@@ -18,16 +18,17 @@ import (
 	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
 )
 
-type AbstractKnowledgeBuilder struct {
-	model.KnowledgeAPI
+//AbstractVoteBuilder ...
+type AbstractVoteBuilder struct {
+	model.VoteAPI
 }
 
-/*BuildUserICOXLM - WORKING MODEL
+/*BuildAddKnowledge - WORKING MODEL
 @author - Azeem Ashraf
 @desc - use the parameter to get user public key to build payment transaction for XLM and submit it
 @params - ResponseWriter,Request
 */
-func (AP *AbstractKnowledgeBuilder) BuildCreateKnowledge(w http.ResponseWriter, r *http.Request) {
+func (AP *AbstractVoteBuilder) BuildVote(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -43,14 +44,15 @@ func (AP *AbstractKnowledgeBuilder) BuildCreateKnowledge(w http.ResponseWriter, 
 
 	//GET THE TYPE AND IDENTIFIER FROM THE XDR
 	AP.PublicKey = txe.SourceAccount.Address()
+	// TDP.PreviousTxnHash=
 	AP.Type = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[0].Body.ManageDataOp.DataValue), "&")
 	AP.PreviousTxn = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[1].Body.ManageDataOp.DataValue), "&")
-	AP.KnowledgeHash = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[2].Body.ManageDataOp.DataValue), "&")
+	AP.KnowledgeID = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[2].Body.ManageDataOp.DataValue), "&")
+	AP.ContributionID = strings.TrimLeft(fmt.Sprintf("%s", txe.Operations[3].Body.ManageDataOp.DataValue), "&")
 
 	//SUBMIT THE GATEWAY'S SIGNED XDR
 	display1 := stellarExecuter.ConcreteSubmitXDR{XDR: AP.XDR}
 	response1 := display1.SubmitXDR(true)
-	fmt.Println(AP)
 
 	if response1.Error.Code == 400 {
 		w.WriteHeader(http.StatusBadRequest)
@@ -60,9 +62,8 @@ func (AP *AbstractKnowledgeBuilder) BuildCreateKnowledge(w http.ResponseWriter, 
 		json.NewEncoder(w).Encode(result)
 		return
 	} else {
-
 		AP.TxnHash = response1.TXNID
-		err2 := object.InsertKnowledge(AP.KnowledgeAPI)
+		err2 := object.InsertVote(AP.VoteAPI)
 		if err2 != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			result := apiModel.SubmitXDRSuccess{
@@ -79,5 +80,4 @@ func (AP *AbstractKnowledgeBuilder) BuildCreateKnowledge(w http.ResponseWriter, 
 			return
 		}
 	}
-
 }

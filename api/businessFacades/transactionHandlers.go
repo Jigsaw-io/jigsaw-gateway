@@ -191,6 +191,53 @@ func AddKnowledge(w http.ResponseWriter, r *http.Request) {
 	display.BuildAddKnowledge(w, r)
 	return
 }
+
+
+
+
+/*AddKnowledge @desc Handles an incoming request and calls the CreateKnowledge
+@author - Azeem Ashraf
+@params - ResponseWriter,Request
+*/
+func AddVote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var voteAPI model.VoteAPI
+
+	if r.Header == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Header present!",
+		}
+		json.NewEncoder(w).Encode(result)
+		return
+	}
+
+	if r.Header.Get("Content-Type") == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "No Content-Type present!",
+		}
+		json.NewEncoder(w).Encode(result)
+
+		return
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&voteAPI)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		result := apiModel.SubmitXDRSuccess{
+			Status: "Error while Decoding the body",
+		}
+		json.NewEncoder(w).Encode(result)
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(voteAPI)
+
+	display := &builder.AbstractVoteBuilder{voteAPI}
+	display.BuildVote(w, r)
+	return
+}
 type Transuc struct {
 	TXN string `json:"txn"`
 }
@@ -270,28 +317,81 @@ type TDP struct {
 	TdpId string `json:"tdpId"`
 }
 
-/*TDPForTXN - Test Endpoint @desc Handles an incoming request and Returns the TDP ID for the TXN Provided.
+/*LastKnowledge - 
 @author - Azeem Ashraf
 @params - ResponseWriter,Request
 */
-func TDPForTXN(w http.ResponseWriter, r *http.Request) {
+func LastKnowledge(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
-	p := object.GetTdpIdForTransaction(vars["Txn"])
+	p := object.GetLastKnowledgeByPublicKey(vars["publicKey"])
 	p.Then(func(data interface{}) interface{} {
-
-		result := data.(model.TransactionCollectionBody)
-
-		res := TDP{TdpId: result.TdpId}
+		result := data.(model.KnowledgeAPI)
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(res)
+		json.NewEncoder(w).Encode(model.LastTxnAPI{LastTxn:result.TxnHash})
 		return nil
 	}).Catch(func(error error) error {
-		w.WriteHeader(http.StatusBadRequest)
-		response := model.Error{Message: "TdpId Not Found in Gateway DataStore"}
+		w.WriteHeader(http.StatusCreated)
+		response := model.Error{Message: "No Knowledge found for this PulicKey"}
+		json.NewEncoder(w).Encode(response)
+		return error
+	})
+	p.Await()
+
+}
+
+
+/*LastContribution - 
+@author - Azeem Ashraf
+@params - ResponseWriter,Request
+*/
+func LastContribution(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	vars := mux.Vars(r)
+
+	object := dao.Connection{}
+	p := object.GetLastContributionByKnowledge(vars["knowledgeID"])
+	p.Then(func(data interface{}) interface{} {
+		result := data.(model.ContributionAPI)
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(model.LastTxnAPI{LastTxn:result.TxnHash})
+		return nil
+	}).Catch(func(error error) error {
+		w.WriteHeader(http.StatusCreated)
+		response := model.Error{Message: "No Contribution found for this KnowledgeID"}
+		json.NewEncoder(w).Encode(response)
+		return error
+	})
+	p.Await()
+
+}
+
+
+
+/*LastVote - 
+@author - Azeem Ashraf
+@params - ResponseWriter,Request
+*/
+func LastVote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	vars := mux.Vars(r)
+
+	object := dao.Connection{}
+	p := object.GetLastVoteByContribution(vars["contibutionID"])
+	p.Then(func(data interface{}) interface{} {
+		result := data.(model.KnowledgeAPI)
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(model.LastTxnAPI{LastTxn:result.TxnHash})
+		return nil
+	}).Catch(func(error error) error {
+		w.WriteHeader(http.StatusCreated)
+		response := model.Error{Message: "No Vote found for this ContributionID"}
 		json.NewEncoder(w).Encode(response)
 		return error
 	})
