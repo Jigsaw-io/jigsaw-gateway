@@ -323,7 +323,9 @@ type TDP struct {
 */
 func LastKnowledge(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
@@ -350,7 +352,8 @@ func LastKnowledge(w http.ResponseWriter, r *http.Request) {
 */
 func LastContribution(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
@@ -378,7 +381,8 @@ func LastContribution(w http.ResponseWriter, r *http.Request) {
 */
 func LastVote(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	vars := mux.Vars(r)
 
 	object := dao.Connection{}
