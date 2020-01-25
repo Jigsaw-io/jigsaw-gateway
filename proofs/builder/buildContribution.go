@@ -13,7 +13,7 @@ import (
 	// "github.com/zeemzo/jigsaw-gateway/constants"
 	"github.com/stellar/go/xdr"
 	"github.com/zeemzo/jigsaw-gateway/dao"
-	"github.com/zeemzo/jigsaw-gateway/proofs/executer/stellarExecuter"
+	"github.com/zeemzo/jigsaw-gateway/proofs/stellarExecuter"
 
 	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
 )

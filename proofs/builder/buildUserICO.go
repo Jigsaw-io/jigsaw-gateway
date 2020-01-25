@@ -11,7 +11,7 @@ import (
 	"github.com/stellar/go/clients/horizon"
 	"github.com/zeemzo/jigsaw-gateway/constants"
 	"github.com/zeemzo/jigsaw-gateway/dao"
-	"github.com/zeemzo/jigsaw-gateway/proofs/executer/stellarExecuter"
+	"github.com/zeemzo/jigsaw-gateway/proofs/stellarExecuter"
 
 	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
 )
