@@ -25,6 +25,7 @@ https://docs.google.com/document/d/1yTEBXge5kwnq5u6AUcPC61OALerW1SFoAh6KqPme-MY/
 - Install packages
 ```    
     go get -u github.com/golang/dep/cmd/dep
+    cd jigsaw-gateway
     dep ensure   
 ```
 
