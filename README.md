@@ -10,14 +10,12 @@ This project implements the Jigsaw Blockchain-gateway.
 https://docs.google.com/document/d/1yTEBXge5kwnq5u6AUcPC61OALerW1SFoAh6KqPme-MY/edit?usp=sharing
 
 - Setup Workspace
-```     
     - Enter GOPATH: `cd %GOPATH%`.
     - Enter src directory : `cd src`.
     - Create a "github.com" directory if absent : `mkdir github.com`.
     - Enter github.com directory : `cd github.com`.
     - Create a "zeemzo" directory if absent : `mkdir zeemzo`.
     - Enter zeemzo directory : `cd zeemzo`.
-```
 
 - Clone the repo
 ```    
