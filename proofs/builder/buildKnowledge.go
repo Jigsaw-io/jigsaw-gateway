@@ -6,16 +6,16 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/zeemzo/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
 
 	// "github.com/stellar/go/build"
 	// "github.com/stellar/go/clients/horizon"
 	// "github.com/zeemzo/jigsaw-gateway/constants"
 	"github.com/stellar/go/xdr"
-	"github.com/zeemzo/jigsaw-gateway/dao"
-	"github.com/zeemzo/jigsaw-gateway/proofs/stellarExecuter"
+	"github.com/Jigsaw-io/jigsaw-gateway/dao"
+	"github.com/Jigsaw-io/jigsaw-gateway/proofs/stellarExecuter"
 
-	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
+	"github.com/Jigsaw-io/jigsaw-gateway/api/apiModel"
 )
 
 type AbstractKnowledgeBuilder struct {

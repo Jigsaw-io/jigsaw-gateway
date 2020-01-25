@@ -5,15 +5,15 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/zeemzo/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
 
 	"github.com/stellar/go/build"
 	"github.com/stellar/go/clients/horizon"
-	"github.com/zeemzo/jigsaw-gateway/constants"
-	"github.com/zeemzo/jigsaw-gateway/dao"
-	"github.com/zeemzo/jigsaw-gateway/proofs/stellarExecuter"
+	"github.com/Jigsaw-io/jigsaw-gateway/constants"
+	"github.com/Jigsaw-io/jigsaw-gateway/dao"
+	"github.com/Jigsaw-io/jigsaw-gateway/proofs/stellarExecuter"
 
-	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
+	"github.com/Jigsaw-io/jigsaw-gateway/api/apiModel"
 )
 
 type AbstractICOBuilder struct {

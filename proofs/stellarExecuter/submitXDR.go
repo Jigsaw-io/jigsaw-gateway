@@ -7,7 +7,7 @@ import (
 	"github.com/stellar/go/clients/horizon"
 
 	// "github.com/zeemzo/jigsaw-gateway/api/apiModel"
-	"github.com/zeemzo/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
 )
 
 type ConcreteSubmitXDR struct {

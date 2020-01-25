@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/zeemzo/jigsaw-gateway/api/businessFacades"
+	"github.com/Jigsaw-io/jigsaw-gateway/api/businessFacades"
 )
 
 type Route struct {

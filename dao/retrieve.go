@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"github.com/zeemzo/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
 
 	"gopkg.in/mgo.v2/bson"
 

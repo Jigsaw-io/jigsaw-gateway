@@ -2,7 +2,7 @@ package dao
 
 import (
 	"fmt"
-	"github.com/zeemzo/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
 )
 
 /*InsertICOTransaction Insert a single Transaction Object to TransactionCollection in DB

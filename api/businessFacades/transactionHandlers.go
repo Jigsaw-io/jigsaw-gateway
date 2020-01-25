@@ -8,10 +8,10 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/stellar/go/build"
 	"github.com/stellar/go/xdr"
-	"github.com/zeemzo/jigsaw-gateway/api/apiModel"
-	"github.com/zeemzo/jigsaw-gateway/dao"
-	"github.com/zeemzo/jigsaw-gateway/model"
-	"github.com/zeemzo/jigsaw-gateway/proofs/builder"
+	"github.com/Jigsaw-io/jigsaw-gateway/api/apiModel"
+	"github.com/Jigsaw-io/jigsaw-gateway/dao"
+	"github.com/Jigsaw-io/jigsaw-gateway/model"
+	"github.com/Jigsaw-io/jigsaw-gateway/proofs/builder"
 )
 
 /*UserICOJIGXUHandler @desc Handles an incoming request and calls the BuildUserICOJIGXU
